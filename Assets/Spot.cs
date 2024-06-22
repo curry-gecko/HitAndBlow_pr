@@ -22,7 +22,7 @@ public class Spot : MonoBehaviour
     {
         Pin pin = other.GetComponent<Pin>();
 
-        if (pin != null)
+        if (pin != null && currentPin == null)
         {
             pin.SetSpot(this);
         }
