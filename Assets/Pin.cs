@@ -4,12 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
+using UnityEditor.PackageManager;
+using System;
 
 public class Pin : MonoBehaviour, IClickableObject
 {
     private Vector3 offset;
     private bool isDragging = false;
     private Spot currentSpot = null;
+    private ReactiveProperty<int> statusCode = new(); // 仮 
+    private SpriteRenderer spriteRenderer = null;
 
     void Start()
     {
@@ -20,16 +24,40 @@ public class Pin : MonoBehaviour, IClickableObject
         // マウスドラッグイベントの設定
         this.UpdateAsObservable()
             .Where(_ => isDragging)
-            .Subscribe(_ => OnMouseDrag());
+            .Subscribe(_ => OnMouseDrag())
+            .AddTo(this);
+
+        if (TryGetComponent<SpriteRenderer>(out spriteRenderer))
+        {
+            statusCode.Subscribe(code => OnChangedStatusCode(code)).AddTo(this);
+        }
+
 
         // マウスアップイベントの設定
         this.OnMouseUpAsObservable()
-            .Subscribe(_ => OnMouseUp());
+            .Subscribe(_ => OnMouseUp())
+            .AddTo(this);
+    }
+
+    private void OnChangedStatusCode(int code)
+    {
+        // issue: 状態の優先度が確立されていない
+        spriteRenderer.color = code switch
+        {
+            // ドラッグ状態
+            // 2 => Color.red,
+            // 選択状態
+            1 => Color.green,
+            // 無選択状態
+            _ => Color.white,
+        };
     }
 
     public void OnMouseDown()
     {
         isDragging = true;
+        // statusCode.Value = 2;
+
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(mousePos);
@@ -54,7 +82,10 @@ public class Pin : MonoBehaviour, IClickableObject
             transform.SetParent(currentSpot.transform);
             currentSpot.SetCurrentPin(this);
         }
+
+        statusCode.Value = (currentSpot == null) ? 0 : 1;
     }
+
     public void SetSpot(Spot spot)
     {
         currentSpot = spot;
