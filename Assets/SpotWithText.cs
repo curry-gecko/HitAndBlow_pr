@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// ピンに追従するテキストオブジェクト(デバッグ用)
+/// スポットに追従するテキストオブジェクト(デバッグ用)
 /// </summary>using UnityEngine;
 using TMPro;  // TextMeshProを使用する場合
 
-public class PinWithText : MonoBehaviour
+public class SpotWithText : MonoBehaviour
 {
-    public string pinTypeName; // TODO: ReactiveProperty の利用
+    public string spotTypeName; // TODO: ReactiveProperty の利用
     public TextMeshProUGUI text;
 
     private void Start()
@@ -27,7 +27,7 @@ public class PinWithText : MonoBehaviour
     {
         if (text != null)
         {
-            text.text = pinTypeName;
+            text.text = spotTypeName;
         }
     }
 }
