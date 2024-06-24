@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEditor.PackageManager;
 using System;
+using DG.Tweening;
 
 public class Pin : MonoBehaviour, IClickableObject
 {
@@ -58,6 +59,8 @@ public class Pin : MonoBehaviour, IClickableObject
         isDragging = true;
         // statusCode.Value = 2;
 
+        transform.DOKill(true);
+
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(mousePos);
@@ -81,9 +84,14 @@ public class Pin : MonoBehaviour, IClickableObject
         {
             transform.SetParent(currentSpot.transform);
             currentSpot.SetCurrentPin(this);
-        }
 
+            // セットされたスポットの中心にsnap する
+            Vector3 pos = currentSpot.transform.position;
+            pos.y += transform.localScale.y / 2;
+            transform.DOMove(pos, 0.1f);
+        }
         statusCode.Value = (currentSpot == null) ? 0 : 1;
+
     }
 
     public void SetSpot(Spot spot)
