@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -14,12 +15,20 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // spot の初期化
         List<string> list = GetSuitList()
             .Select(suit => suit.GetDescription()).ToList()
-            .OrderBy(_ => Guid.NewGuid()).ToList();
+            .OrderBy(_ => Guid.NewGuid()).ToList(); // 順番変更
         for (int i = 0; i < list.Count; i++)
         {
             Spots[i].typeName.Value = list[i];
+        }
+        // pin の初期化
+        list = GetSuitList()
+            .Select(suit => suit.GetDescription()).ToList();
+        foreach (var (item, index) in list.Select((item, index) => (item, index)))
+        {
+            Pin[index].typeName.Value = item;
         }
     }
 
@@ -38,6 +47,18 @@ public class GameManager : MonoBehaviour
         if (hasEmptySpot)
         {
             Debug.Log("tag" + ":" + "has empty spot");
+            return;
+        }
+
+        if (EvaluateGuess())
+        {
+            // すべて正解
+            Debug.Log("tag" + ":" + "Correct Pins.");
+        }
+        else
+        {
+            //
+            Debug.Log("tag" + ":" + "Any Incorrect Pins.");
         }
         return;
     }
@@ -48,5 +69,14 @@ public class GameManager : MonoBehaviour
         List<SuitType> list = new((SuitType[])Enum.GetValues(typeof(SuitType)));
 
         return list;
+    }
+
+    private bool EvaluateGuess()
+    {
+        bool let = false;
+
+        let = Spots.Find(Spot => Spot.IsCollect == false) == null;
+
+        return let;
     }
 }

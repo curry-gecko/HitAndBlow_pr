@@ -10,6 +10,8 @@ using DG.Tweening;
 
 public class Pin : MonoBehaviour, IClickableObject
 {
+    public ReactiveProperty<string> typeName = new();
+    //
     private Vector3 offset;
     private bool isDragging = false;
     private Spot currentSpot = null;
@@ -18,6 +20,7 @@ public class Pin : MonoBehaviour, IClickableObject
 
     void Start()
     {
+
         // マウスダウンイベントの設定
         // this.OnMouseDownAsObservable()
         //     .Subscribe(_ => OnMouseDown());
