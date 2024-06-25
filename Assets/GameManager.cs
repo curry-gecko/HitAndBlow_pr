@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -12,7 +14,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        List<string> list = GetSuitList()
+            .Select(suit => suit.GetDescription()).ToList()
+            .OrderBy(_ => Guid.NewGuid()).ToList();
+        for (int i = 0; i < list.Count; i++)
+        {
+            Spots[i].typeName.Value = list[i];
+        }
     }
 
     // Update is called once per frame
@@ -32,5 +40,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("tag" + ":" + "has empty spot");
         }
         return;
+    }
+
+    //初期化用途として､スートのリストを返す
+    private List<SuitType> GetSuitList()
+    {
+        List<SuitType> list = new((SuitType[])Enum.GetValues(typeof(SuitType)));
+
+        return list;
     }
 }
