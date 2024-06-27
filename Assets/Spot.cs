@@ -11,7 +11,8 @@ public class Spot : MonoBehaviour
     public ReactiveProperty<string> typeName = new();
     public PinType pinType;
     public Pin currentPin;
-    public bool IsCollect => currentPin.typeName.Value == typeName.Value;
+    public bool IsCollect => currentPin != null && currentPin.typeName.Value == typeName.Value;
+    [SerializeField] SpotWithAnswer answer;
 
     // Start is called before the first frame update
     void Start()

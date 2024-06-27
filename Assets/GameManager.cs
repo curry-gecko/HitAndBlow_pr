@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] public List<Spot> Spots;
     [SerializeField] public List<Pin> Pin;
+    [SerializeField] public AnswerPresenter answerPresenter;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +61,8 @@ public class GameManager : MonoBehaviour
             //
             Debug.Log("tag" + ":" + "Any Incorrect Pins.");
         }
+
+        answerPresenter.SetAnswer();
         return;
     }
 
