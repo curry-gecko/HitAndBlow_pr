@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
     public void OnClickSubmit()
     {
         // すべてのSpotにピンが存在すること
-        bool hasEmptySpot = Spots.Find(spot => spot.currentPin == null);
+        bool hasEmptySpot = Spots.Find(spot => spot.CurrentPin.Value == null);
+
         Debug.Log("tag" + ":" + hasEmptySpot);
         if (hasEmptySpot)
         {
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         bool let = false;
 
-        let = Spots.Find(Spot => Spot.IsCollect == false) == null;
+        let = Spots.Find(Spot => Spot.IsCollect.Value == false) == null;
 
         return let;
     }

@@ -104,7 +104,7 @@ public class Pin : MonoBehaviour, IClickableObject
 
     public void ClearSpot()
     {
-        if (currentSpot != null && currentSpot.currentPin == this)
+        if (currentSpot != null && currentSpot.CurrentPin.Value == this)
         {
             currentSpot.SetCurrentPin(null);
         }

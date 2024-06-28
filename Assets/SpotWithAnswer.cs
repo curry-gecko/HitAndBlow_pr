@@ -27,19 +27,25 @@ public class SpotWithAnswer : MonoBehaviour
             Debug.Log("" + spotHeight);
             text.transform.position = pos;
         }
-    }
-
-    private void Update()
-    {
-        UpdateText();
-    }
-
-    public void UpdateText()
-    {
-
-        if (text != null)
+        // Spot の監視
+        if (spot != null)
         {
-            text.text = spot.IsCollect.ToString();
+            spot.IsCollect.Subscribe(isCollect => UpdateText(isCollect)).AddTo(this);
         }
+
+    }
+
+
+    public void UpdateText(bool isCollect)
+    {
+
+        if (text == null) return;
+        string res = "MISS!";
+        if (isCollect)
+        {
+            res = "Hit!!";
+        }
+
+        text.text = res;
     }
 }
