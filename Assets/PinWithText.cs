@@ -1,32 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// ピンに追従するテキストオブジェクト(デバッグ用)
 /// </summary>using UnityEngine;
 using TMPro;
 using UniRx;
-using Unity.VisualScripting;  // TextMeshProを使用する場合
 
 public class PinWithText : MonoBehaviour
 {
-    public string pinTypeName; // TODO: ReactiveProperty の利用
-    public Pin pin;
-    public TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI text;
+    private Pin pin = null;
 
     private void Start()
     {
-        // テキストを更新
-        if (pin != null)
-        {
-            pin.typeName.Subscribe(name => UpdateText(name)).AddTo(this);
-        }
     }
 
     private void Update()
     {
-        // テキストをピンオブジェクトの位置に追従させる
-        text.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        if (Camera.main == null)
+        {
+            Debug.LogError("Main camera not found");
+            return;
+        }
+
+        if (text != null && pin != null)
+        {
+            // テキストをピンオブジェクトの位置に追従させる
+            text.transform.position = Camera.main.WorldToScreenPoint(pin.transform.position);
+        }
     }
 
     public void UpdateText(string typeName)
@@ -35,5 +35,25 @@ public class PinWithText : MonoBehaviour
         {
             text.text = typeName;
         }
+    }
+
+    private void AttachPin(Pin _pin)
+    {
+        pin = _pin;
+        pin.TypeName.Subscribe(name => UpdateText(name)).AddTo(this);
+    }
+
+
+    // 
+    public static PinWithText Init(Pin pin)
+    {
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null) return null;
+
+        GameObject prefab = Resources.Load<GameObject>("PinWithText");
+        PinWithText pwt = Instantiate(prefab, canvas.transform).GetComponent<PinWithText>();
+        pwt.AttachPin(pin);
+
+        return pwt;
     }
 }

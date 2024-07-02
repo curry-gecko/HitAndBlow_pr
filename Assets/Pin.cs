@@ -7,10 +7,14 @@ using UniRx.Triggers;
 using UnityEditor.PackageManager;
 using System;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class Pin : MonoBehaviour, IClickableObject
 {
-    public ReactiveProperty<string> typeName = new();
+    private ReactiveProperty<string> typeName = new();
+    public IReadOnlyReactiveProperty<string> TypeName => typeName;
+
+
     //
     private Vector3 offset;
     private bool isDragging = false;
@@ -41,6 +45,7 @@ public class Pin : MonoBehaviour, IClickableObject
         this.OnMouseUpAsObservable()
             .Subscribe(_ => OnMouseUp())
             .AddTo(this);
+
     }
 
     private void OnChangedStatusCode(int code)
@@ -110,5 +115,11 @@ public class Pin : MonoBehaviour, IClickableObject
         }
         transform.SetParent(null);
         currentSpot = null;
+    }
+
+    //
+    public void SetTypeName(string _typeName)
+    {
+        typeName.Value = _typeName;
     }
 }

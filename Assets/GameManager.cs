@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public List<Spot> Spots;
     [SerializeField] public List<Pin> Pin;
     [SerializeField] public AnswerPresenter answerPresenter;
+    [SerializeField] public PinManager pinManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,12 +26,7 @@ public class GameManager : MonoBehaviour
             Spots[i].typeName.Value = list[i];
         }
         // pin の初期化
-        list = GetSuitList()
-            .Select(suit => suit.GetDescription()).ToList();
-        foreach (var (item, index) in list.Select((item, index) => (item, index)))
-        {
-            Pin[index].typeName.Value = item;
-        }
+        pinManager.AddPin(GetSuitList());
     }
 
     // Update is called once per frame

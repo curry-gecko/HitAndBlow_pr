@@ -24,7 +24,6 @@ public class SpotWithAnswer : MonoBehaviour
             float spotHeight = collider.bounds.size.y;
             Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
             pos.y += spotHeight * 50;
-            Debug.Log("" + spotHeight);
             text.transform.position = pos;
         }
         // Spot の監視

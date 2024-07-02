@@ -24,7 +24,7 @@ public class Spot : MonoBehaviour
         typeName.Subscribe(name => { pinType = new PinType(name); })
             .AddTo(this);
 
-        currentPin.Subscribe(pin => isCollect.Value = pin != null && pin.typeName.Value == typeName.Value)
+        currentPin.Subscribe(pin => isCollect.Value = pin != null && pin.TypeName.Value == typeName.Value)
             .AddTo(this);
 
     }
