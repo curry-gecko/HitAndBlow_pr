@@ -78,3 +78,5 @@ crashlytics-build.properties
 /Assets/Plugins/UniRx/*
 /Assets/TextMesh Pro/*
 /Assets/Fonts/*
+/Assets/Resources/*.png
+/Assets/Resources/*.png.meta
