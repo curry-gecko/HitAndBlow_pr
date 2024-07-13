@@ -12,7 +12,8 @@ public class ClickEventManager : MonoBehaviour
         // UpdateAsObservableを使って毎フレームのクリックイベントをチェック
         this.UpdateAsObservable()
             .Where(_ => Input.GetMouseButtonDown(0))
-            .Subscribe(_ => OnMouseDown());
+            .Subscribe(_ => OnMouseDown())
+            .AddTo(this);
     }
 
     void OnMouseDown()
@@ -21,6 +22,7 @@ public class ClickEventManager : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray);
+
         if (hits.Length == 0) return;
         hits = hits.OrderBy(hit => hit.distance).ToArray();
 
@@ -28,11 +30,11 @@ public class ClickEventManager : MonoBehaviour
         {
             if (hit.collider.TryGetComponent<IClickableObject>(out var clickable))
             {
-                clickable.OnMouseDown();
+
+                clickable.OnMouseClick();
                 // 優先順位の定義などあれば
                 break;
             }
         }
-
     }
 }

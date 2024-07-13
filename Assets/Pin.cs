@@ -32,7 +32,7 @@ public class Pin : MonoBehaviour, IClickableObject
         // マウスドラッグイベントの設定
         this.UpdateAsObservable()
             .Where(_ => isDragging)
-            .Subscribe(_ => OnMouseDrag())
+            .Subscribe(_ => OnMouseDragging())
             .AddTo(this);
 
         if (TryGetComponent<SpriteRenderer>(out spriteRenderer))
@@ -43,7 +43,7 @@ public class Pin : MonoBehaviour, IClickableObject
 
         // マウスアップイベントの設定
         this.OnMouseUpAsObservable()
-            .Subscribe(_ => OnMouseUp())
+            .Subscribe(_ => OnMouseRelease())
             .AddTo(this);
 
     }
@@ -62,7 +62,7 @@ public class Pin : MonoBehaviour, IClickableObject
         };
     }
 
-    public void OnMouseDown()
+    public void OnMouseClick()
     {
         isDragging = true;
         // statusCode.Value = 2;
@@ -74,7 +74,7 @@ public class Pin : MonoBehaviour, IClickableObject
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(mousePos);
     }
 
-    public void OnMouseDrag()
+    public void OnMouseDragging()
     {
         if (!isDragging) return; // 冗長ではある
 
@@ -84,7 +84,7 @@ public class Pin : MonoBehaviour, IClickableObject
         transform.position = newPos;
     }
 
-    public void OnMouseUp()
+    public void OnMouseRelease()
     {
         isDragging = false;
 

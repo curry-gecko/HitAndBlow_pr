@@ -1,6 +1,6 @@
 public interface IClickableObject
 {
-    void OnMouseDown();
-    void OnMouseDrag();
-    void OnMouseUp();
+    void OnMouseClick();
+    void OnMouseDragging();
+    void OnMouseRelease();
 }

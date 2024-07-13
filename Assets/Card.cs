@@ -11,50 +11,44 @@ using UnityEngine;
 public class Card : MonoBehaviour, IClickableObject
 {
     private bool isDragging = false;
-    private ReactiveProperty<int> number = new(0);
+    private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
     private int maxNumber;
     private int minNumber = 0;
     [SerializeField]
     public List<Sprite> sprites;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-
-        //
+        // 番号変更イベントの購読
         number.Subscribe(x => ChangeSpriteFromNumber(x))
             .AddTo(this);
 
+        // 最大番号をスプライト数から設定
         maxNumber = sprites.Count - 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        // 必要に応じて処理を追加
     }
 
-
-    public void OnMouseDown()
+    public void OnMouseClick()
     {
-        Debug.Log("MouseDown detected on " + gameObject.name);
         AddNumber(1);
     }
 
-    public void OnMouseDrag()
+    public void OnMouseDragging()
     {
-        // throw new System.NotImplementedException();
+        // ドラッグ処理
     }
 
-    public void OnMouseUp()
+    public void OnMouseRelease()
     {
-        // throw new System.NotImplementedException();
+        // マウスアップ処理
     }
 
     private void AddNumber(int _number)
     {
-
         int x = number.Value + _number;
         if (x < 0)
         {
@@ -66,13 +60,12 @@ public class Card : MonoBehaviour, IClickableObject
         }
 
         number.Value = x;
-
     }
 
     private void ChangeSpriteFromNumber(int number)
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (sprites.Count > 0 && sprites.Count <= number)
+        if (renderer != null && number >= 0 && number < sprites.Count)
         {
             renderer.sprite = sprites[number];
         }
