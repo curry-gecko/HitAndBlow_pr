@@ -10,7 +10,10 @@ using UnityEngine;
 /// </summary>
 public class Card : MonoBehaviour, IClickableObject
 {
-    private bool isDragging = false;
+
+    private ReactiveProperty<bool> isDragging = new();
+    public IReadOnlyReactiveProperty<bool> IsDragging => isDragging;
+
     private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
     private int maxNumber;
     private int minNumber = 0;
@@ -21,6 +24,18 @@ public class Card : MonoBehaviour, IClickableObject
     {
         // 番号変更イベントの購読
         number.Subscribe(x => ChangeSpriteFromNumber(x))
+            .AddTo(this);
+
+        // マウスドラッグイベントの設定
+        this.UpdateAsObservable()
+            .Where(_ => IsDragging.Value)
+            .Subscribe(_ => OnMouseDragging())
+            .AddTo(this);
+
+        // マウスリリース
+        this.OnMouseUpAsObservable()
+            .Where(_ => IsDragging.Value)
+            .Subscribe(_ => OnMouseRelease())
             .AddTo(this);
 
         // 最大番号をスプライト数から設定
@@ -34,16 +49,22 @@ public class Card : MonoBehaviour, IClickableObject
 
     public void OnMouseClick()
     {
-        AddNumber(1);
+        isDragging.Value = true;
+        // AddNumber(1);
     }
 
     public void OnMouseDragging()
     {
         // ドラッグ処理
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(mousePos);
+        transform.position = newPos;
     }
 
     public void OnMouseRelease()
     {
+        isDragging.Value = false;
         // マウスアップ処理
     }
 
