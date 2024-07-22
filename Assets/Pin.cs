@@ -122,4 +122,10 @@ public class Pin : MonoBehaviour, IClickableObject
     {
         typeName.Value = _typeName;
     }
+
+    public void OnMouseOnObject()
+    {
+        return;
+        // throw new NotImplementedException();
+    }
 }

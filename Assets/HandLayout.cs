@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// カードを並べる処理を扱う
+/// カード単体ではなく､複数または複数に影響を与える場合の処理を記述する
 /// </summary>
 public class HandLayout : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class HandLayout : MonoBehaviour
     private CardManager manager; // DI 予定
     private List<Card> cardPosition = new();
     private float xPadding = 2.5f;
+    private float yPadding = 0.2f;
     private float zPadding = 1.0f;
     // Start is called before the first frame update
     void Start()
@@ -43,11 +45,15 @@ public class HandLayout : MonoBehaviour
         //
         for (int i = 0; i < cardPosition.Count; i++)
         {
+            Card _card = cardPosition[i];
             float xPosition = i * xPadding;
-            float zPosition = i * zPadding;
-            if (!cardPosition[i].IsDragging.Value)
+            float yPosition = _card.IsMouseOnObject.Value ? yPadding : 0;
+            float zPosition = _card.IsMouseOnObject.Value ? 0 : i * zPadding + 1;
+
+
+            if (!_card.IsDragging.Value)
             {
-                cardPosition[i].transform.localPosition = new(xPosition, 0, zPosition);
+                _card.transform.localPosition = new(xPosition, yPosition, zPosition);
             }
         }
     }

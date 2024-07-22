@@ -1,24 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
 /// <summary>
 /// カードクラス
-/// 初期化時にスプライトを指定する,null許容
+/// 初期化時にスプライトを指定する
+/// 処理について､transform に対する移動などのみを実装する｡ロジックを持たせない
 /// </summary>
 public class Card : MonoBehaviour, IClickableObject
 {
 
     private ReactiveProperty<bool> isDragging = new();
     public IReadOnlyReactiveProperty<bool> IsDragging => isDragging;
+    private ReactiveProperty<bool> isMouseOnObject = new();
+    public IReadOnlyReactiveProperty<bool> IsMouseOnObject => isMouseOnObject;
 
     private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
     private int maxNumber;
     private int minNumber = 0;
     [SerializeField]
     public List<Sprite> sprites;
+    //
+    private Vector3 originalScale;
+    private float zoomScale = 1.2f;
+    private float duration = 0.1f;
+    private Tween tween;
 
     void Start()
     {
@@ -40,6 +49,9 @@ public class Card : MonoBehaviour, IClickableObject
 
         // 最大番号をスプライト数から設定
         maxNumber = sprites.Count - 1;
+
+        // 
+        originalScale = transform.localScale;
     }
 
     void Update()
@@ -90,5 +102,25 @@ public class Card : MonoBehaviour, IClickableObject
         {
             renderer.sprite = sprites[number];
         }
+    }
+
+    public void OnMouseOnObject()
+    {
+        // 
+        if (isMouseOnObject.Value) return;
+
+        tween ??= transform.DOScale(originalScale * zoomScale, duration).SetEase(Ease.InOutQuart);
+        isMouseOnObject.Value = true;
+
+        this.OnMouseExitAsObservable()
+            .First().Subscribe(_ =>
+            {
+                isMouseOnObject.Value = false;
+                tween = transform.DOScale(originalScale, duration)
+                        .SetEase(Ease.InOutQuart)
+                        .OnComplete(() => tween = null);
+
+            })
+            .AddTo(this);
     }
 }
