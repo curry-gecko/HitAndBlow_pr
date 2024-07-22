@@ -27,7 +27,8 @@ public class Card : MonoBehaviour, IClickableObject
     private Vector3 originalScale;
     private float zoomScale = 1.2f;
     private float duration = 0.1f;
-    private Tween tween;
+    private Tween scaleTween = null;
+    public Tween CurrentPositionTween = null;
 
     void Start()
     {
@@ -36,10 +37,10 @@ public class Card : MonoBehaviour, IClickableObject
             .AddTo(this);
 
         // マウスドラッグイベントの設定
-        this.UpdateAsObservable()
-            .Where(_ => IsDragging.Value)
-            .Subscribe(_ => OnMouseDragging())
-            .AddTo(this);
+        // this.UpdateAsObservable()
+        //     .Where(_ => IsDragging.Value)
+        //     .Subscribe(_ => OnMouseDragging())
+        //     .AddTo(this);
 
         // マウスリリース
         this.OnMouseUpAsObservable()
@@ -62,6 +63,10 @@ public class Card : MonoBehaviour, IClickableObject
     public void OnMouseClick()
     {
         isDragging.Value = true;
+        if (scaleTween != null && scaleTween.IsActive())
+        {
+            scaleTween.Complete();
+        }
         // AddNumber(1);
     }
 
@@ -108,17 +113,18 @@ public class Card : MonoBehaviour, IClickableObject
     {
         // 
         if (isMouseOnObject.Value) return;
+        if (isDragging.Value) return;
 
-        tween ??= transform.DOScale(originalScale * zoomScale, duration).SetEase(Ease.InOutQuart);
+        scaleTween ??= transform.DOScale(originalScale * zoomScale, duration).SetEase(Ease.InOutQuart);
         isMouseOnObject.Value = true;
 
         this.OnMouseExitAsObservable()
             .First().Subscribe(_ =>
             {
                 isMouseOnObject.Value = false;
-                tween = transform.DOScale(originalScale, duration)
+                scaleTween = transform.DOScale(originalScale, duration)
                         .SetEase(Ease.InOutQuart)
-                        .OnComplete(() => tween = null);
+                        .OnComplete(() => scaleTween = null);
 
             })
             .AddTo(this);
