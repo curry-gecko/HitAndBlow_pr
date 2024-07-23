@@ -14,6 +14,8 @@ public class Pin : MonoBehaviour, IClickableObject
     private ReactiveProperty<string> typeName = new();
     public IReadOnlyReactiveProperty<string> TypeName => typeName;
 
+    public bool Draggable => true;
+
 
     //
     private Vector3 offset;
@@ -127,5 +129,10 @@ public class Pin : MonoBehaviour, IClickableObject
     {
         return;
         // throw new NotImplementedException();
+    }
+
+    public void OnObjectOnDragged(GameObject obj)
+    {
+        throw new NotImplementedException();
     }
 }

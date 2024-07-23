@@ -7,6 +7,7 @@ using System.Linq;
 
 public class ClickEventManager : MonoBehaviour
 {
+    private GameObject currentDraggingObject = null;
     void Start()
     {
         // UpdateAsObservableを使って毎フレームのクリックイベントをチェック
@@ -20,6 +21,14 @@ public class ClickEventManager : MonoBehaviour
             .Where(_ => !Input.GetMouseButtonDown(0))
             .Subscribe(_ => DoMouseOnObject())
             .AddTo(this);
+
+        // マウスリリースの監視
+        this.UpdateAsObservable()
+            .Where(_ => currentDraggingObject != null)
+            .Where(_ => Input.GetMouseButtonUp(0))
+            .Subscribe(_ => DoMouseOnRelease())
+            .AddTo(this);
+
     }
 
     void DoMouseClick()
@@ -34,9 +43,18 @@ public class ClickEventManager : MonoBehaviour
 
                 clickable.OnMouseClick();
                 // 優先順位の定義などあれば
+
+                // ドラッグできるオブジェクトであればドラッギング状態に格納する
+                if (currentDraggingObject == null && clickable.Draggable) { }
+                {
+                    Debug.Log("tag" + ":" + clickable);
+                    currentDraggingObject = hit.collider.gameObject;
+                }
                 break;
             }
         }
+
+
     }
 
     void DoMouseOnObject()
@@ -56,6 +74,24 @@ public class ClickEventManager : MonoBehaviour
             }
         }
 
+    }
+
+    void DoMouseOnRelease()
+    {
+        // マウス位置からのRayを作成
+        RaycastHit2D[] hits = GetHits();
+        Debug.Log("tag" + ":" + hits.Length);
+        foreach (RaycastHit2D hit in hits)
+        {
+            Debug.Log("tag" + ":" + hit.collider.gameObject.name + "");
+            if (hit.collider.TryGetComponent<IClickableObject>(out var clickable))
+            {
+
+                // clickable.OnMouseOnObject();
+                clickable.OnObjectOnDragged(currentDraggingObject);
+                // 優先順位の定義などあれば
+            }
+        }
     }
 
     RaycastHit2D[] GetHits()
