@@ -14,7 +14,9 @@ public class Pin : MonoBehaviour, IClickableObject
     private ReactiveProperty<string> typeName = new();
     public IReadOnlyReactiveProperty<string> TypeName => typeName;
 
+    // 
     public bool Draggable => true;
+    public GameObject Me => gameObject;
 
 
     //
@@ -131,8 +133,4 @@ public class Pin : MonoBehaviour, IClickableObject
         // throw new NotImplementedException();
     }
 
-    public void OnObjectOnDragged(GameObject obj)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -18,7 +18,9 @@ public class Card : MonoBehaviour, IClickableObject
     private ReactiveProperty<bool> isMouseOnObject = new();
     public IReadOnlyReactiveProperty<bool> IsMouseOnObject => isMouseOnObject;
 
+
     public bool Draggable { get => true; } // TODO drag可能かどうかを判定する
+    public GameObject Me => gameObject;
 
     private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
     private int maxNumber;
@@ -132,9 +134,4 @@ public class Card : MonoBehaviour, IClickableObject
             .AddTo(this);
     }
 
-    public void OnObjectOnDragged(GameObject obj)
-    {
-
-        Debug.Log("tag" + ":" + obj.name);
-    }
 }

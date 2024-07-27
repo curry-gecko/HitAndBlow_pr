@@ -6,6 +6,6 @@ public interface IClickableObject
     void OnMouseDragging();
     void OnMouseRelease();
     void OnMouseOnObject();
-    void OnObjectOnDragged(GameObject obj);
     bool Draggable { get; }
+    GameObject Me { get; }
 }

@@ -4,10 +4,12 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class ClickEventManager : MonoBehaviour
 {
-    private GameObject currentDraggingObject = null;
+    private IClickableObject currentDraggingObject = null;
+
     void Start()
     {
         // UpdateAsObservableを使って毎フレームのクリックイベントをチェック
@@ -47,8 +49,7 @@ public class ClickEventManager : MonoBehaviour
                 // ドラッグできるオブジェクトであればドラッギング状態に格納する
                 if (currentDraggingObject == null && clickable.Draggable) { }
                 {
-                    Debug.Log("tag" + ":" + clickable);
-                    currentDraggingObject = hit.collider.gameObject;
+                    currentDraggingObject = clickable;
                 }
                 break;
             }
@@ -76,22 +77,29 @@ public class ClickEventManager : MonoBehaviour
 
     }
 
+    // ドラッグ操作完了時に呼び出す
     void DoMouseOnRelease()
     {
         // マウス位置からのRayを作成
         RaycastHit2D[] hits = GetHits();
-        Debug.Log("tag" + ":" + hits.Length);
+
         foreach (RaycastHit2D hit in hits)
         {
-            Debug.Log("tag" + ":" + hit.collider.gameObject.name + "");
             if (hit.collider.TryGetComponent<IClickableObject>(out var clickable))
             {
-
-                // clickable.OnMouseOnObject();
-                clickable.OnObjectOnDragged(currentDraggingObject);
-                // 優先順位の定義などあれば
+                clickable.OnMouseRelease();
             }
         }
+
+        // Release 後にオブジェクトが2つ以上存在し､ドラッグ操作をしていた場合
+        if (hits.Length >= 2 && hits[0].collider.gameObject == currentDraggingObject.Me)
+        {
+            if (hits[1].collider.TryGetComponent<IClickableObject>(out var clickable))
+            {
+                EventManager.Instance.OnObjectsReleased.OnNext((currentDraggingObject, clickable));
+            }
+        }
+
     }
 
     RaycastHit2D[] GetHits()
