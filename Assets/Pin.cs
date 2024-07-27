@@ -17,6 +17,7 @@ public class Pin : MonoBehaviour, IClickableObject
     // 
     public bool Draggable => true;
     public GameObject Me => gameObject;
+    public string Tag => "Pin";
 
 
     //

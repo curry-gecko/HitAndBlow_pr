@@ -28,6 +28,12 @@ public class GameManager : MonoBehaviour
         }
         // pin の初期化
         pinManager.AddPin(GetSuitList());
+
+        // Eventの購読
+        EventManager em = EventManager.Instance;
+        em.OnObjectsReleased
+            .Subscribe(objects => OnObjectsReleased(objects.Item1, objects.Item2))
+            .AddTo(this);
     }
 
     // Update is called once per frame
@@ -79,5 +85,14 @@ public class GameManager : MonoBehaviour
         let = Spots.Find(Spot => Spot.IsCollect.Value == false) == null;
 
         return let;
+    }
+
+    private void OnObjectsReleased(IClickableObject one, IClickableObject two)
+    {
+        if (one.Tag == "Card" && two.Tag == "Spot")
+        {
+            // 記述
+            Debug.Log("Released Card to Spot!!");
+        }
     }
 }

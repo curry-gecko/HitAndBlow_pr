@@ -8,4 +8,5 @@ public interface IClickableObject
     void OnMouseOnObject();
     bool Draggable { get; }
     GameObject Me { get; }
+    string Tag { get; }
 }

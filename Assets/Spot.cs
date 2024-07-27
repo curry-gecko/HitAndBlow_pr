@@ -6,7 +6,7 @@ using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Spot : MonoBehaviour
+public class Spot : MonoBehaviour, IClickableObject
 {
     //
     public ReactiveProperty<string> typeName = new();
@@ -14,6 +14,12 @@ public class Spot : MonoBehaviour
     public ReactiveProperty<bool> IsCollect => isCollect;
     private readonly ReactiveProperty<Pin> currentPin = new();
     public IReadOnlyReactiveProperty<Pin> CurrentPin => currentPin;
+
+    public bool Draggable => false;
+    public GameObject Me => gameObject;
+
+    public string Tag => "Spot";
+
     //
     public PinType pinType;
     [SerializeField] SpotWithAnswer answer;
@@ -58,5 +64,25 @@ public class Spot : MonoBehaviour
     public void SetCurrentPin(Pin pin)
     {
         currentPin.Value = pin;
+    }
+
+    public void OnMouseClick()
+    {
+        return;
+    }
+
+    public void OnMouseDragging()
+    {
+        return;
+    }
+
+    public void OnMouseRelease()
+    {
+        return;
+    }
+
+    public void OnMouseOnObject()
+    {
+        return;
     }
 }
