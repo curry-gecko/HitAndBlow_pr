@@ -134,7 +134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeName:
     value: 
-  isEmptyObject: 0
   answer: {fileID: 1370072566065919443}
 --- !u!114 &1370072566065919443
 MonoBehaviour:
@@ -179,7 +178,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012703657, y: 0.6034355}
+  m_Offset: {x: -0.012703657, y: 2.6760263}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -190,5 +189,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5915961, y: 2.206871}
+  m_Size: {x: 3.5915961, y: 6.3520527}
   m_EdgeRadius: 0

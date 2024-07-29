@@ -12,9 +12,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public List<Spot> Spots;
-    [SerializeField] public List<Pin> Pin;
+    // [SerializeField] public List<Pin> Pin;
     [SerializeField] public AnswerPresenter answerPresenter;
-    [SerializeField] public PinManager pinManager;
+    // [SerializeField] public PinManager pinManager;
     [SerializeField] public CardManager cardManager;
     [SerializeField] public SpotManager spotManager;
     //
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             Spots[i].typeName.Value = list[i];
         }
         // pin の初期化
-        pinManager.AddPin(GetSuitList());
+        // pinManager.AddPin(GetSuitList());
 
         // Eventの購読
         EventManager em = EventManager.Instance;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     public void OnClickSubmit()
     {
         // すべてのSpotにピンが存在すること
-        bool hasEmptySpot = Spots.Find(spot => spot.CurrentPin.Value == null);
+        bool hasEmptySpot = true;
 
         Debug.Log("tag" + ":" + hasEmptySpot);
         if (hasEmptySpot)
