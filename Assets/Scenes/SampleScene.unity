@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -506,6 +506,8 @@ MonoBehaviour:
   - {fileID: 0}
   answerPresenter: {fileID: 1597155908}
   pinManager: {fileID: 408682701}
+  cardManager: {fileID: 944774367}
+  spotManager: {fileID: 1751625316}
 --- !u!4 &351674680
 Transform:
   m_ObjectHideFlags: 0
@@ -1285,7 +1287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2767,8 +2769,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751625315}
+  - component: {fileID: 1751625316}
   m_Layer: 0
-  m_Name: SpotsArea
+  m_Name: SpotsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2793,6 +2796,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1751625316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751625314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3a3e325968aa84e9685db6a46205cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spot:
+  - {fileID: 345467305}
+  - {fileID: 1898753429}
+  - {fileID: 1875164089}
+  - {fileID: 417683509}
 --- !u!114 &1852290032 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
@@ -3176,7 +3196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1370072566065919453, guid: 11b7e4861a762494494bb4e0e07b08cc, type: 3}
       propertyPath: m_LocalPosition.y

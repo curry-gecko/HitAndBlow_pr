@@ -22,6 +22,11 @@ public class Spot : MonoBehaviour, IClickableObject
 
     //
     public PinType pinType;
+    public bool isEmptyObject => CurrentPendingCard == null;
+    private Card CurrentPendingCard = null;
+
+    //
+
     [SerializeField] SpotWithAnswer answer;
 
     // Start is called before the first frame update
@@ -64,6 +69,17 @@ public class Spot : MonoBehaviour, IClickableObject
     public void SetCurrentPin(Pin pin)
     {
         currentPin.Value = pin;
+    }
+
+    public void SetCard(Card card)
+    {
+        // カードの親に自身をセット
+        CurrentPendingCard = card;
+    }
+
+    public void RemoveCard()
+    {
+        CurrentPendingCard = null;
     }
 
     public void OnMouseClick()

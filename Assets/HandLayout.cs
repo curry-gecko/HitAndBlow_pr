@@ -16,6 +16,9 @@ public class HandLayout : MonoBehaviour
     private float xPadding = 2.5f;
     private float yPadding = 0.2f;
     private float zPadding = 1.0f;
+
+    private Vector3 CardLocalPosition = new(0, 3.5f, -1); // TODO 定数
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +65,14 @@ public class HandLayout : MonoBehaviour
                 _card.CurrentPositionTween = _card.transform.DOMove(newPos, 0.1f)
                         .OnComplete(() => _card.CurrentPositionTween = null);
             }
-            else if (_card.CurrentPositionTween == null && !_card.CurrentPositionTween.IsActive())
+            else if (_card.IsPending.Value)
             {
+                /// Spot に Pending されている場合､規定のローカル座標で上書きする
+                _card.transform.localPosition = CardLocalPosition;
+            }
+            else if (_card.CurrentPositionTween == null && !_card.CurrentPositionTween.IsActive() && !_card.IsPending.Value)
+            {
+                // 手札に存在する状態
                 float xPosition = i * xPadding;
                 float yPosition = _card.IsMouseOnObject.Value ? yPadding : 0;
                 float zPosition = _card.IsMouseOnObject.Value ? 0 : i * zPadding + 1;

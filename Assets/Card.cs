@@ -13,22 +13,30 @@ using UnityEngine;
 public class Card : MonoBehaviour, IClickableObject
 {
 
+    // Status
     private ReactiveProperty<bool> isDragging = new();
     public IReadOnlyReactiveProperty<bool> IsDragging => isDragging;
     private ReactiveProperty<bool> isMouseOnObject = new();
     public IReadOnlyReactiveProperty<bool> IsMouseOnObject => isMouseOnObject;
+    private ReactiveProperty<bool> isPending = new();
+    public IReadOnlyReactiveProperty<bool> IsPending => isPending;
 
     //
     public bool Draggable { get => true; } // TODO drag可能かどうかを判定する
     public GameObject Me => gameObject;
     public string Tag => "Card";
 
+    //
     private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
     private int maxNumber;
     private int minNumber = 0;
     [SerializeField]
     public List<Sprite> sprites;
-    //
+
+    // 
+
+
+    // Transform 系
     private Vector3 originalScale;
     private float zoomScale = 1.2f;
     private float duration = 0.1f;
@@ -72,6 +80,8 @@ public class Card : MonoBehaviour, IClickableObject
         {
             scaleTween.Complete();
         }
+        //
+        SetPending(false);
         // AddNumber(1);
     }
 
@@ -135,4 +145,8 @@ public class Card : MonoBehaviour, IClickableObject
             .AddTo(this);
     }
 
+    public void SetPending(bool pending)
+    {
+        isPending.Value = pending;
+    }
 }

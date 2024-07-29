@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public List<Pin> Pin;
     [SerializeField] public AnswerPresenter answerPresenter;
     [SerializeField] public PinManager pinManager;
+    [SerializeField] public CardManager cardManager;
+    [SerializeField] public SpotManager spotManager;
+    //
+    private Vector3 CardLocalPosition = new(0, 3.5f, -1); // TODO 定数
     // Start is called before the first frame update
     void Start()
     {
@@ -92,7 +96,23 @@ public class GameManager : MonoBehaviour
         if (one.Tag == "Card" && two.Tag == "Spot")
         {
             // 記述
-            Debug.Log("Released Card to Spot!!");
+            if (one.Me.TryGetComponent<Card>(out var card) && two.Me.TryGetComponent<Spot>(out var spot))
+            {
+                if (!spot.isEmptyObject) { return; }
+                spot.SetCard(card);
+                // Card の親に Spotをセット
+                card.transform.parent = spot.transform;
+                card.transform.localPosition = CardLocalPosition;
+                card.SetPending(true);
+                card.IsPending
+                    .Where(p => !p)
+                    .First()
+                    .Subscribe(_ =>
+                    {
+                        card.transform.parent = cardManager.transform;
+                        spot.RemoveCard();
+                    }).AddTo(this);
+            }
         }
     }
 }
