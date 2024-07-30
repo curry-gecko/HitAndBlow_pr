@@ -260,6 +260,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -502,6 +506,7 @@ MonoBehaviour:
   answerPresenter: {fileID: 1597155908}
   cardManager: {fileID: 944774367}
   spotManager: {fileID: 1751625316}
+  numberOfDigits: 4
 --- !u!4 &351674680
 Transform:
   m_ObjectHideFlags: 0
@@ -659,6 +664,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -736,6 +745,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2157,6 +2170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2343,6 +2360,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2636,6 +2657,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 944774365}
     m_Modifications:
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: number
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: sprites.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200561198817578104, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
+      propertyPath: sprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4a9542298a0cf6b4990743180fcbe5cd, type: 3}
     - target: {fileID: 6925265981463590921, guid: dea4b347e202a7c4fa8c1bd54b7601e5, type: 3}
       propertyPath: m_RootOrder
       value: 5

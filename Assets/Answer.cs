@@ -4,16 +4,48 @@ using UnityEngine;
 
 public class Answer
 {
-    private readonly List<SuitType> correctSequence;
+    [SerializeField] public int SequenceRangeMax = 6; // 最大の数字
+    [SerializeField] public int SequenceRangeMin = 1; // 最小の数字
+    private readonly List<int> correctSequence;
     public int hit = 0;
     public int blow = 0;
 
-    public Answer(List<SuitType> sequence)
+
+    public Answer(List<int> sequence)
     {
-        correctSequence = new List<SuitType>(sequence);
+        correctSequence = new List<int>(sequence);
     }
 
-    public bool CheckAnswer(List<SuitType> playerSequence)
+    public Answer(int numberOfDigits, bool canDuplication = false)
+    {
+        correctSequence = GenerateSequence(numberOfDigits, canDuplication);
+    }
+
+    // ランダムなシーケンスを生成する
+    private List<int> GenerateSequence(int numberOfDigits, bool canDuplication)
+    {
+        List<int> ret = new();
+        List<int> availableDigits = new List<int>();
+        for (int i = 1; i < SequenceRangeMax + 1; i++)
+        {
+            availableDigits.Add(i);
+        }
+
+        for (int i = 0; i < numberOfDigits; i++)
+        {
+            int index = Random.Range(0, availableDigits.Count);
+            ret.Add(availableDigits[index]);
+            if (!canDuplication)
+            {
+                // 重複許可しない場合は､使用した数字を削除
+                availableDigits.RemoveAt(index);
+            }
+        }
+
+        return ret;
+    }
+
+    public bool CheckAnswer(List<int> playerSequence)
     {
         if (playerSequence.Count != correctSequence.Count)
             return false;
@@ -27,7 +59,7 @@ public class Answer
         return true;
     }
 
-    public Answer ProvideHint(List<SuitType> playerSequence)
+    public Answer ProvideHint(List<int> playerSequence)
     {
         for (int i = 0; i < playerSequence.Count; i++)
         {
@@ -44,8 +76,8 @@ public class Answer
         return this;
     }
 
-    public List<SuitType> GetCorrectSequence()
+    public List<int> GetCorrectSequence()
     {
-        return new List<SuitType>(correctSequence);
+        return new List<int>(correctSequence);
     }
 }

@@ -27,14 +27,8 @@ public class Card : MonoBehaviour, IClickableObject
     public string Tag => "Card";
 
     //
-    private ReactiveProperty<int> number = new ReactiveProperty<int>(0);
-    private int maxNumber;
-    private int minNumber = 0;
-    [SerializeField]
+    [SerializeField] int number = 0;
     public List<Sprite> sprites;
-
-    // 
-
 
     // Transform 系
     private Vector3 originalScale;
@@ -45,27 +39,17 @@ public class Card : MonoBehaviour, IClickableObject
 
     void Start()
     {
-        // 番号変更イベントの購読
-        number.Subscribe(x => ChangeSpriteFromNumber(x))
-            .AddTo(this);
-
-        // マウスドラッグイベントの設定
-        // this.UpdateAsObservable()
-        //     .Where(_ => IsDragging.Value)
-        //     .Subscribe(_ => OnMouseDragging())
-        //     .AddTo(this);
-
         // マウスリリース
         this.OnMouseUpAsObservable()
             .Where(_ => IsDragging.Value)
             .Subscribe(_ => OnMouseRelease())
             .AddTo(this);
 
-        // 最大番号をスプライト数から設定
-        maxNumber = sprites.Count - 1;
-
         // 
         originalScale = transform.localScale;
+
+        // number に応じたSpriteを設定する
+        ChangeSpriteFromNumber(number);
     }
 
     void Update()
@@ -100,25 +84,16 @@ public class Card : MonoBehaviour, IClickableObject
         // マウスアップ処理
     }
 
-    private void AddNumber(int _number)
-    {
-        int x = number.Value + _number;
-        if (x < 0)
-        {
-            x = maxNumber;
-        }
-        else if (x > maxNumber)
-        {
-            x = minNumber;
-        }
-
-        number.Value = x;
-    }
-
     private void ChangeSpriteFromNumber(int number)
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer != null && number >= 0 && number < sprites.Count)
+        SpriteRenderer renderer = transform.GetComponentInChildren<SpriteRenderer>();
+
+        if (renderer == null)
+        {
+            Debug.LogWarning("SpriteRenderer is not found in children of the object:" + this.gameObject.name + "");
+            return;
+        }
+        if (number >= 0 && number < sprites.Count)
         {
             renderer.sprite = sprites[number];
         }

@@ -215,7 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3bf1faacf281ba4d8fd1112b137bcea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 0
   sprites:
+  - {fileID: 0}
   - {fileID: 21300000, guid: 9654fffdabe2e7348b5414cf7eb035ab, type: 3}
   - {fileID: 21300000, guid: 77ecab9b8cc248a44863d328ff7c9ab3, type: 3}
   - {fileID: 21300000, guid: 5ff1651863bc04540994e1c4d6f3014b, type: 3}

@@ -17,8 +17,14 @@ public class GameManager : MonoBehaviour
     // [SerializeField] public PinManager pinManager;
     [SerializeField] public CardManager cardManager;
     [SerializeField] public SpotManager spotManager;
+
+
     //
     private Vector3 CardLocalPosition = new(0, 3.5f, -1); // TODO 定数
+
+    //
+    [SerializeField] public int numberOfDigits = 4;
+    private Answer answer = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +44,12 @@ public class GameManager : MonoBehaviour
         em.OnObjectsReleased
             .Subscribe(objects => OnObjectsReleased(objects.Item1, objects.Item2))
             .AddTo(this);
+
+        // answer の初期化
+        answer = new Answer(numberOfDigits, false);
+#if UNITY_EDITOR
+        Debug.Log("The answer is :" + string.Join(",", answer.GetCorrectSequence()));
+#endif
     }
 
     // Update is called once per frame
