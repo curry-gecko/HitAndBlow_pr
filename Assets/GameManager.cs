@@ -61,15 +61,6 @@ public class GameManager : MonoBehaviour
     //
     public void OnClickSubmit()
     {
-        // すべてのSpotにピンが存在すること
-        bool hasEmptySpot = true;
-
-        Debug.Log("tag" + ":" + hasEmptySpot);
-        if (hasEmptySpot)
-        {
-            Debug.Log("tag" + ":" + "has empty spot");
-            return;
-        }
 
         if (EvaluateGuess())
         {
@@ -110,7 +101,7 @@ public class GameManager : MonoBehaviour
             // 記述
             if (one.Me.TryGetComponent<Card>(out var card) && two.Me.TryGetComponent<Spot>(out var spot))
             {
-                if (!spot.isEmptyObject) { return; }
+                if (!spot.isEmptyObject.Value) { return; }
                 spot.SetCard(card);
                 // Card の親に Spotをセット
                 card.transform.parent = spot.transform;

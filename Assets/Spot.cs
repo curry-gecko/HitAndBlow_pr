@@ -19,7 +19,7 @@ public class Spot : MonoBehaviour, IClickableObject
     public string Tag => "Spot";
 
     //
-    public bool isEmptyObject => CurrentPendingCard == null;
+    public ReactiveProperty<bool> isEmptyObject = new(true);
     private Card CurrentPendingCard = null;
 
     //
@@ -42,11 +42,13 @@ public class Spot : MonoBehaviour, IClickableObject
     {
         // カードの親に自身をセット
         CurrentPendingCard = card;
+        isEmptyObject.Value = false;
     }
 
     public void RemoveCard()
     {
         CurrentPendingCard = null;
+        isEmptyObject.Value = true;
     }
 
     public void OnMouseClick()
