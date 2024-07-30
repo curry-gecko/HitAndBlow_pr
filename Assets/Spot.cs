@@ -24,7 +24,6 @@ public class Spot : MonoBehaviour, IClickableObject
 
     //
 
-    [SerializeField] SpotWithAnswer answer;
 
     // Start is called before the first frame update
     void Start()

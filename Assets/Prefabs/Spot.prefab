@@ -94,8 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1370072566065919453}
   - component: {fileID: 1370072566065919442}
-  - component: {fileID: 1370072566065919443}
-  - component: {fileID: 1370072566065919452}
   - component: {fileID: 2056674262263964927}
   m_Layer: 0
   m_Name: Spot
@@ -134,37 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeName:
     value: 
-  answer: {fileID: 1370072566065919443}
---- !u!114 &1370072566065919443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370072566065919454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f362924ab7003da418f4c06f4dfdc00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spotTypeName: 
-  spot: {fileID: 1370072566065919442}
-  text: {fileID: 0}
---- !u!114 &1370072566065919452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370072566065919454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89031b2a6da3f7546a1a6d602546aeb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spotTypeName: Spade
-  spot: {fileID: 1370072566065919442}
-  text: {fileID: 0}
+  answer: {fileID: 0}
 --- !u!61 &2056674262263964927
 BoxCollider2D:
   m_ObjectHideFlags: 0
