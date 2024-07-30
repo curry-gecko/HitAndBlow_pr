@@ -47,13 +47,14 @@ public class HandLayout : MonoBehaviour
     private void UpdateHandLayout()
     {
         //
+        int countOfPending = 0;
         for (int i = 0; i < cardPosition.Count; i++)
         {
             Card _card = cardPosition[i];
+            countOfPending += _card.IsPending.Value ? 1 : 0;
 
             if (_card.IsDragging.Value)
             {
-
                 Vector3 mousePos = Input.mousePosition;
                 mousePos.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
                 Vector3 newPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -73,7 +74,7 @@ public class HandLayout : MonoBehaviour
             else if (_card.CurrentPositionTween == null && !_card.CurrentPositionTween.IsActive() && !_card.IsPending.Value)
             {
                 // 手札に存在する状態
-                float xPosition = i * xPadding;
+                float xPosition = (i - countOfPending) * xPadding;
                 float yPosition = _card.IsMouseOnObject.Value ? yPadding : 0;
                 float zPosition = _card.IsMouseOnObject.Value ? 0 : i * zPadding + 1;
                 Vector3 pos = new Vector3(xPosition, yPosition, zPosition);
