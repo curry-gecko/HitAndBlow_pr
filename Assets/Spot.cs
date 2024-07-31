@@ -9,7 +9,7 @@ using UnityEngine;
 public class Spot : MonoBehaviour, IClickableObject
 {
     //
-    public ReactiveProperty<string> typeName = new();
+    public ReactiveProperty<int> typeName = new();
     private readonly ReactiveProperty<bool> isCollect = new();
     public ReactiveProperty<bool> IsCollect => isCollect;
 
@@ -19,8 +19,8 @@ public class Spot : MonoBehaviour, IClickableObject
     public string Tag => "Spot";
 
     //
-    public ReactiveProperty<bool> isEmptyObject = new(true);
-    private Card CurrentPendingCard = null;
+    public ReactiveProperty<bool> isEmptyObject = new();
+    public ReactiveProperty<Card> currentPendingCard = new();
 
     //
 
@@ -28,6 +28,12 @@ public class Spot : MonoBehaviour, IClickableObject
     // Start is called before the first frame update
     void Start()
     {
+        isEmptyObject.Value = true;
+        currentPendingCard
+            .Subscribe(c =>
+            {
+                isEmptyObject.Value = c == null;
+            }).AddTo(this);
 
     }
 
@@ -41,14 +47,12 @@ public class Spot : MonoBehaviour, IClickableObject
     public void SetCard(Card card)
     {
         // カードの親に自身をセット
-        CurrentPendingCard = card;
-        isEmptyObject.Value = false;
+        currentPendingCard.Value = card;
     }
 
     public void RemoveCard()
     {
-        CurrentPendingCard = null;
-        isEmptyObject.Value = true;
+        currentPendingCard.Value = null;
     }
 
     public void OnMouseClick()

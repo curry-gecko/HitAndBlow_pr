@@ -27,7 +27,7 @@ public class Card : MonoBehaviour, IClickableObject
     public string Tag => "Card";
 
     //
-    [SerializeField] int number = 0;
+    public int number = 0;
     public List<Sprite> sprites;
 
     // Transform 系

@@ -11,7 +11,6 @@ using UnityEngine;
 /// </summary>
 public class SpotManager : MonoBehaviour
 {
-    [SerializeField]
     public List<Spot> spots = new();
 
     private IObservable<bool> hasEmptyObjectStream;
@@ -19,6 +18,7 @@ public class SpotManager : MonoBehaviour
     {
         get
         {
+            // 参照時にNullで参照されることを防止する
             if (hasEmptyObjectStream == null)
             {
                 hasEmptyObjectStream = spots
@@ -50,5 +50,13 @@ public class SpotManager : MonoBehaviour
         hasEmptyObjectStream = null;
         var lazy = HasEmptyObjectStream; //初期化
 
+    }
+
+    public List<int> GetPlayerSequence()
+    {
+        return spots.Select(sp =>
+        {
+            return sp.currentPendingCard.Value != null ? sp.currentPendingCard.Value.number : 0;
+        }).ToList();
     }
 }

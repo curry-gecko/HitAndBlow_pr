@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 /// <summary>
@@ -29,13 +30,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // spot の初期化
-        List<string> list = GetSuitList()
-            .Select(suit => suit.GetDescription()).ToList()
-            .OrderBy(_ => Guid.NewGuid()).ToList(); // 順番変更
-        for (int i = 0; i < list.Count; i++)
-        {
-            Spots[i].typeName.Value = list[i];
-        }
+        // List<string> list = GetSuitList()
+        //     .Select(suit => suit.GetDescription()).ToList()
+        //     .OrderBy(_ => Guid.NewGuid()).ToList(); // 順番変更
+        // for (int i = 0; i < list.Count; i++)
+        // {
+        //     Spots[i].typeName.Value = list[i];
+        // }
         // pin の初期化
         // pinManager.AddPin(GetSuitList());
 
@@ -61,8 +62,13 @@ public class GameManager : MonoBehaviour
     //
     public void OnClickSubmit()
     {
+        List<int> playerSequence = spotManager.GetPlayerSequence();
 
-        if (EvaluateGuess())
+        Debug.Log("" + string.Join(",", playerSequence));
+
+        var result = answer.CheckAnswer(playerSequence);
+
+        if (result.isCollected)
         {
             // すべて正解
             Debug.Log("tag" + ":" + "Correct Pins.");
@@ -70,10 +76,10 @@ public class GameManager : MonoBehaviour
         else
         {
             //
-            Debug.Log("tag" + ":" + "Any Incorrect Pins.");
+            Debug.Log("tag" + ":" + "Any Incorrect Pins. hit:" + result.hit + ", blow:" + result.blow);
         }
 
-        answerPresenter.SetAnswer();
+        answerPresenter.DisplayResult();
         return;
     }
 
