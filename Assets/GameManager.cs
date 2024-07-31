@@ -12,10 +12,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] public List<Spot> Spots;
-    // [SerializeField] public List<Pin> Pin;
     [SerializeField] public AnswerPresenter answerPresenter;
-    // [SerializeField] public PinManager pinManager;
     [SerializeField] public CardManager cardManager;
     [SerializeField] public SpotManager spotManager;
 
@@ -29,17 +26,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // spot の初期化
-        // List<string> list = GetSuitList()
-        //     .Select(suit => suit.GetDescription()).ToList()
-        //     .OrderBy(_ => Guid.NewGuid()).ToList(); // 順番変更
-        // for (int i = 0; i < list.Count; i++)
-        // {
-        //     Spots[i].typeName.Value = list[i];
-        // }
-        // pin の初期化
-        // pinManager.AddPin(GetSuitList());
-
         // Eventの購読
         EventManager em = EventManager.Instance;
         em.OnObjectsReleased
@@ -81,23 +67,6 @@ public class GameManager : MonoBehaviour
 
         answerPresenter.DisplayResult();
         return;
-    }
-
-    //初期化用途として､スートのリストを返す
-    private List<SuitType> GetSuitList()
-    {
-        List<SuitType> list = new((SuitType[])Enum.GetValues(typeof(SuitType)));
-
-        return list;
-    }
-
-    private bool EvaluateGuess()
-    {
-        bool let = false;
-
-        let = Spots.Find(Spot => Spot.IsCollect.Value == false) == null;
-
-        return let;
     }
 
     private void OnObjectsReleased(IClickableObject one, IClickableObject two)
