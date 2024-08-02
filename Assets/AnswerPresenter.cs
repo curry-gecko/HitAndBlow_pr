@@ -6,6 +6,10 @@ public class AnswerPresenter : MonoBehaviour
 {
     [SerializeField] public List<Spot> Spots;
 
+    [SerializeField] private GameObject answerEntryPrefab;
+    [SerializeField] private Transform DisplayTransform;
+    [SerializeField] Canvas canvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +26,18 @@ public class AnswerPresenter : MonoBehaviour
     public void DisplayResult()
     {
 
+    }
+
+    public void DisplayAnswer(Answer answer)
+    {
+        // Create a new entry from the prefab
+        GameObject entry = Instantiate(answerEntryPrefab, DisplayTransform);
+
+        // Assuming answerEntryPrefab has a script to update its UI
+
+        if (entry.TryGetComponent<AnswerEntryUI>(out var entryUI))
+        {
+            entryUI.UpdateUI(answer);
+        }
     }
 }

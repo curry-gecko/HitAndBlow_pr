@@ -7,7 +7,8 @@ public class Answer
     [SerializeField] public int SequenceRangeMax = 6; // 最大の数字
     [SerializeField] public int SequenceRangeMin = 1; // 最小の数字
     private List<int> correctSequence;
-    private List<int> playerSequence;
+    internal List<int> playerSequence { get; private set; }
+    //
     public int hit = 0;
     public int blow = 0;
     public bool isCollected = false;

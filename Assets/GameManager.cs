@@ -13,6 +13,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public AnswerPresenter answerPresenter;
+    [SerializeField] public AnswerHistoryManager answerHistoryManager;
     [SerializeField] public CardManager cardManager;
     [SerializeField] public SpotManager spotManager;
 
