@@ -131,8 +131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeName:
-    value: 
-  answer: {fileID: 0}
+    value: 0
+  isEmptyObject:
+    value: 0
+  currentPendingCard:
+    value: {fileID: 0}
 --- !u!61 &2056674262263964927
 BoxCollider2D:
   m_ObjectHideFlags: 0

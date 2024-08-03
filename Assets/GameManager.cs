@@ -33,15 +33,19 @@ public class GameManager : MonoBehaviour
             .Subscribe(objects => OnObjectsReleased(objects.Item1, objects.Item2))
             .AddTo(this);
 
+        Observable.EveryUpdate()
+            .Where(_ => Input.GetKeyDown(KeyCode.Space))
+            .Subscribe(_ => Debug.Log(Time.deltaTime + "")).AddTo(this);
         // answer の初期化
         answer = new Answer(numberOfDigits, false);
 #if UNITY_EDITOR
         Debug.Log("The answer is :" + string.Join(",", answer.GetCorrectSequence()));
         // Debug 用 適当なカードをセットする
         Observable.EveryUpdate()
-            .Where(_ => Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
+            .Where(_ => Input.GetKeyDown(KeyCode.Space))
             .Subscribe(_ =>
             {
+                Debug.Log("On Called SetCardToSpot in Debug.");
                 var cards = RandomSelection.GetRandomElements<Card>(cardManager.hand, numberOfDigits, false);
                 if (cards.Any(c => c.IsPending.Value)) return; // Pending カードがある場合は処理を無効にする
                 foreach (var item in spotManager.spots.Select((spot, idx) => new { spot, idx }))
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
                 }
             }).AddTo(this);
 #endif
+        Debug.Log("GM Started");
     }
 
     // Update is called once per frame
@@ -80,6 +85,7 @@ public class GameManager : MonoBehaviour
 
         answerHistoryManager.AddAnswer(result);
 
+        cardManager.ReleaseCard(); // TODO 
         return;
     }
 

@@ -20,4 +20,12 @@ public class CardManager : MonoBehaviour
     {
 
     }
+
+    public void ReleaseCard()
+    {
+        foreach (var item in hand)
+        {
+            item.SetPending(false);
+        }
+    }
 }

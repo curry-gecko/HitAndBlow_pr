@@ -10,7 +10,7 @@ using UnityEngine;
 /// 初期化時にスプライトを指定する
 /// 処理について､transform に対する移動などのみを実装する｡ロジックを持たせない
 /// </summary>
-public class Card : MonoBehaviour, IClickableObject
+public class Card : ICard, IClickableObject
 {
 
     // Status
@@ -26,9 +26,6 @@ public class Card : MonoBehaviour, IClickableObject
     public GameObject Me => gameObject;
     public string Tag => "Card";
 
-    //
-    public int number = 0;
-    public List<Sprite> sprites;
 
     // Transform 系
     private Vector3 originalScale;
@@ -82,21 +79,6 @@ public class Card : MonoBehaviour, IClickableObject
     {
         isDragging.Value = false;
         // マウスアップ処理
-    }
-
-    private void ChangeSpriteFromNumber(int number)
-    {
-        SpriteRenderer renderer = transform.GetComponentInChildren<SpriteRenderer>();
-
-        if (renderer == null)
-        {
-            Debug.LogWarning("SpriteRenderer is not found in children of the object:" + this.gameObject.name + "");
-            return;
-        }
-        if (number >= 0 && number < sprites.Count)
-        {
-            renderer.sprite = sprites[number];
-        }
     }
 
     public void OnMouseOnObject()

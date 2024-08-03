@@ -776,7 +776,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000004b3f56082fe4ff3a
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1846,10 +1846,6 @@ MonoBehaviour:
   answerEntryPrefab: {fileID: 9124200119499012887, guid: 0e6612922a1295d4c9111f301eb05198, type: 3}
   DisplayTransform: {fileID: 1597155909}
   canvas: {fileID: 1867546815}
-  offsetX: 0
-  offsetY: 0
-  paddingX: 0
-  paddingY: -50
 --- !u!4 &1597155909
 Transform:
   m_ObjectHideFlags: 0
@@ -2160,17 +2156,17 @@ Canvas:
   m_GameObject: {fileID: 1867546811}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 989848623
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!4 &1875164086 stripped
 Transform:

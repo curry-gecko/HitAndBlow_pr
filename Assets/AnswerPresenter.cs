@@ -12,10 +12,10 @@ public class AnswerPresenter : MonoBehaviour
     [SerializeField] Canvas canvas;
 
     //
-    [SerializeField] private float offsetX = 0;
-    [SerializeField] private float offsetY = 0;
-    [SerializeField] private float paddingX = 0;
-    [SerializeField] private float paddingY = -50;
+    private float offsetX = 0;
+    private float offsetY = 0;
+    private float paddingX = 0;
+    private float paddingY = -125;
 
 
 
