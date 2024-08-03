@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -12,7 +13,6 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] public AnswerPresenter answerPresenter;
     [SerializeField] public AnswerHistoryManager answerHistoryManager;
     [SerializeField] public CardManager cardManager;
     [SerializeField] public SpotManager spotManager;
@@ -37,6 +37,17 @@ public class GameManager : MonoBehaviour
         answer = new Answer(numberOfDigits, false);
 #if UNITY_EDITOR
         Debug.Log("The answer is :" + string.Join(",", answer.GetCorrectSequence()));
+        // Debug 用 適当なカードをセットする
+        Observable.EveryUpdate()
+            .Where(_ => Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
+            .Subscribe(_ =>
+            {
+                var cards = RandomSelection.GetRandomElements<Card>(cardManager.hand, numberOfDigits, false);
+                foreach (var item in spotManager.spots.Select((spot, idx) => new { spot, idx }))
+                {
+                    SetCardToSpot(cards[item.idx], item.spot);
+                }
+            }).AddTo(this);
 #endif
     }
 
@@ -66,7 +77,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("tag" + ":" + "Any Incorrect Pins. hit:" + result.hit + ", blow:" + result.blow);
         }
 
-        answerPresenter.DisplayResult();
+        answerHistoryManager.AddAnswer(result);
+
         return;
     }
 
@@ -78,6 +90,7 @@ public class GameManager : MonoBehaviour
             if (one.Me.TryGetComponent<Card>(out var card) && two.Me.TryGetComponent<Spot>(out var spot))
             {
                 if (!spot.isEmptyObject.Value) { return; }
+                SetCardToSpot(card, spot);
                 spot.SetCard(card);
                 // Card の親に Spotをセット
                 card.transform.parent = spot.transform;
@@ -93,5 +106,21 @@ public class GameManager : MonoBehaviour
                     }).AddTo(this);
             }
         }
+    }
+    private void SetCardToSpot(Card card, Spot spot)
+    {
+        spot.SetCard(card);
+        // Card の親に Spotをセット
+        card.transform.parent = spot.transform;
+        card.transform.localPosition = CardLocalPosition;
+        card.SetPending(true);
+        card.IsPending
+            .Where(p => !p)
+            .First()
+            .Subscribe(_ =>
+            {
+                card.transform.parent = cardManager.transform;
+                spot.RemoveCard();
+            }).AddTo(this);
     }
 }

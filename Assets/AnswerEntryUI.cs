@@ -26,8 +26,8 @@ public class AnswerEntryUI : MonoBehaviour
 
     public void UpdateUI(Answer answer)
     {
-        playerSequenceText.text = "Player: " + string.Join(", ", answer.playerSequence);
-        hitText.text = "Hit: " + answer.hit;
-        blowText.text = "Blow: " + answer.blow;
+        playerSequenceText.text = "" + string.Join(", ", answer.playerSequence);
+        hitText.text = "" + answer.hit;
+        blowText.text = "" + answer.blow;
     }
 }
