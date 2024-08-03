@@ -11,6 +11,13 @@ public class AnswerPresenter : MonoBehaviour
     [SerializeField] private Transform DisplayTransform;
     [SerializeField] Canvas canvas;
 
+    //
+    [SerializeField] private float offsetX = 0;
+    [SerializeField] private float offsetY = 0;
+    [SerializeField] private float paddingX = 0;
+    [SerializeField] private float paddingY = -50;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +47,10 @@ public class AnswerPresenter : MonoBehaviour
         if (entry.TryGetComponent<AnswerEntryUI>(out var entryUI))
         {
             entryUI.UpdateUI(answer);
+            entry.transform.localPosition = new Vector3(offsetX + (answerHistory.Count * paddingX), offsetY + (answerHistory.Count * paddingY), 0f);
+
+            //
+            answerHistory.Add(entry);
         }
     }
 }

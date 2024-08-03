@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
             .Subscribe(_ =>
             {
                 var cards = RandomSelection.GetRandomElements<Card>(cardManager.hand, numberOfDigits, false);
+                if (cards.Any(c => c.IsPending.Value)) return; // Pending カードがある場合は処理を無効にする
                 foreach (var item in spotManager.spots.Select((spot, idx) => new { spot, idx }))
                 {
                     SetCardToSpot(cards[item.idx], item.spot);
