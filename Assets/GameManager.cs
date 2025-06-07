@@ -98,19 +98,6 @@ public class GameManager : MonoBehaviour
             {
                 if (!spot.isEmptyObject.Value) { return; }
                 SetCardToSpot(card, spot);
-                spot.SetCard(card);
-                // Card の親に Spotをセット
-                card.transform.parent = spot.transform;
-                card.transform.localPosition = CardLocalPosition;
-                card.SetPending(true);
-                card.IsPending
-                    .Where(p => !p)
-                    .First()
-                    .Subscribe(_ =>
-                    {
-                        card.transform.parent = cardManager.transform;
-                        spot.RemoveCard();
-                    }).AddTo(this);
             }
         }
     }

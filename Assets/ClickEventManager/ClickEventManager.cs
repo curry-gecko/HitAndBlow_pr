@@ -47,7 +47,7 @@ public class ClickEventManager : MonoBehaviour
                 // 優先順位の定義などあれば
 
                 // ドラッグできるオブジェクトであればドラッギング状態に格納する
-                if (currentDraggingObject == null && clickable.Draggable) { }
+                if (currentDraggingObject == null && clickable.Draggable)
                 {
                     currentDraggingObject = clickable;
                 }
