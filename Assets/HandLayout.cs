@@ -71,7 +71,7 @@ public class HandLayout : MonoBehaviour
                 /// Spot に Pending されている場合､規定のローカル座標で上書きする
                 _card.transform.localPosition = CardLocalPosition;
             }
-            else if (_card.CurrentPositionTween == null && !_card.CurrentPositionTween.IsActive() && !_card.IsPending.Value)
+            else if ((_card.CurrentPositionTween == null || !_card.CurrentPositionTween.IsActive()) && !_card.IsPending.Value)
             {
                 // 手札に存在する状態
                 float xPosition = (i - countOfPending) * xPadding;
